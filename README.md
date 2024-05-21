@@ -2,7 +2,7 @@
 
 <!-- ## Folder Structure
 
-```
+
 src
 │   main.ts         # Application entry point
 └───api             # Express route controllers for all the endpoints of the app
@@ -12,7 +12,6 @@ src
 └───services        # All the business logic is here
 └───types           # Type declaration files (d.ts) for Typescript
  -->
-```
 
 ## Getting Started
 
