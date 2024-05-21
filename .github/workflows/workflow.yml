@@ -1,0 +1,26 @@
+name: Main workflow
+
+on:
+  push:
+    branches: master
+
+jobs:
+  run:
+    name: Run
+    runs-on: ${{ matrix.operating-system }}
+    strategy:
+      matrix:
+        operating-system: [ubuntu-latest, macOS-latest]
+    steps:
+      - uses: actions/checkout@master
+
+      - name: Set Node.js 10.x
+        uses: actions/setup-node@master
+        with:
+          version: 10.x
+
+      - name: yarn install
+        run: yarn install
+
+      - name: build
+        run: yarn build
