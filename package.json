@@ -25,6 +25,7 @@
     "argon2": "^0.31.1",
     "body-parser": "^1.20.0",
     "celebrate": "^15.0.1",
+    "cheerio": "^1.0.0-rc.12",
     "cors": "^2.8.5",
     "dotenv": "^16.0.3",
     "express": "^4.18.1",

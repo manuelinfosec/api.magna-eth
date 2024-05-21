@@ -20,6 +20,11 @@ export default {
   jwtSecret: process.env.JWT_SECRET,
 
   /**
+   * Ethereum Nodes Website
+   */
+  ethereumNodeWebsite: process.env.ETHEREUM_NODE_LIST || 'https://ethereumnodes.com',
+
+  /**
    * MongoDB connection options.
    */
   database: {
