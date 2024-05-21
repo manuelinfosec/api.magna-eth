@@ -1,7 +1,7 @@
 {
   "name": "magna-stream-api",
   "version": "1.0.0",
-  "description": "Clean Architecture for node.js projects (Typescript + Express + TypeORM + Typedi)",
+  "description": "Scalable API for streaming and tracking Ethereum blockchain transactions in real-time, built with Node.js, TypeScript, Express, Socket.io, Typedi and TypeORM.",
   "main": "main.ts",
   "repository": "https://github.com/manuelinfosec/magna-stream-api.git",
   "author": "Chiemezie Njoku <njokuchiemezie01@gmail.com>",
