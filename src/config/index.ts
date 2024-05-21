@@ -22,10 +22,10 @@ export default {
   /**
    * Ethereum Nodes Website
    */
-  ethereumNodeWebsite: process.env.ETHEREUM_NODE_LIST || 'https://ethereumnodes.com',
+  ethereumNodeWebsite: process.env.ETHEREUM_NODE_LIST || 'http://ethereumnodes.com',
 
   /**
-   * MongoDB connection options.
+   * Postgres connection options.
    */
   database: {
     type: process.env.TYPEORM_CONNECTION,

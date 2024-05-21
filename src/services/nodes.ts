@@ -9,12 +9,13 @@ class NodeService {
 
   public async scrapeNodes() {
     try {
+      // Fetch the HTML content from the website
       const response = await fetch(config.ethereumNodeWebsite);
       const data = await response.text();
 
       const $ = cheerio.load(data);
 
-      $('div.jsx-cbbca5b1a7ae850f.node.down').each((index, element) => {
+      $('div.jsx-cbbca5b1a7ae850f.node.up').each((index, element) => {
         $(element)
           .find('input.jsx-cbbca5b1a7ae850f.endpoint')
           .each((index, inputElement) => {

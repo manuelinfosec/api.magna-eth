@@ -5,18 +5,18 @@ services:
     environment:
       - PORT=8080
       - JWT_SECRET=secret
-      - TYPEORM_CONNECTION=mongodb
-      - TYPEORM_HOST=mongodb
+      - TYPEORM_CONNECTION=postgres
+      - TYPEORM_HOST=postgres
       - TYPEORM_PORT=27017
       - TYPEORM_DATABASE=test
     ports:
       - "8080:8080"
     links:
-      - mongodb
+      - postgres
     networks:
       - internal
       
-  mongodb:
+  postgres:
     image: mongo:latest
     ports:
       - "27017:27017"
