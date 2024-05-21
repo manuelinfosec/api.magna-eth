@@ -4,7 +4,7 @@ import * as cheerio from 'cheerio';
 import config from '../config';
 
 @Service()
-class NodeService {
+export default class NodeService {
   private nodes: string[] = [];
 
   public async scrapeNodes() {
