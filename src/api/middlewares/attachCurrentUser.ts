@@ -14,7 +14,7 @@ const attachCurrentUser = async (req, res, next) => {
     const userServiceInstance = Container.get(UserService);
 
     // Find the user record based on the authentication token ID
-    const userRecord = await userServiceInstance.findOne(req.auth.id);
+    const userRecord = await userServiceInstance.findOne({where: {id: req.auth.id}});
 
     // If user record is not found, return a 401 Unauthorized status
     if (!userRecord) {

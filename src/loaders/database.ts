@@ -13,7 +13,7 @@ export default async (): Promise<Connection> => {
     username: config.database.username,
     password: config.database.password,
     database: config.database.database,
-    synchronize: false, // Disable automatic schema synchronization
+    synchronize: true, // Disable automatic schema synchronization
     logging: false, // Disable logging of SQL queries
     entities: [User], // Register TypeORM entities
   };

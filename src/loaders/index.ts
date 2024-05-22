@@ -5,9 +5,9 @@ import server from './server';
 import { Container } from 'typedi';
 import NodeService from '../services/nodes';
 
-export default async (app: express.Application) => {
+export default async (app: express.Application, io) => {
   // Scrape and initialize Ethereum nodes
-  Container.get(NodeService).scrapeNodes();
+  // await Container.get(NodeService).scrapeNodes();
   console.log('Created RPC Nodes pool');
 
   // Initialize and connect to the database
@@ -15,6 +15,6 @@ export default async (app: express.Application) => {
   console.log('DB loaded and connected!');
 
   // Initialize and configure the Express server
-  await server(app);
+  await server(app, io);
   console.log('Server loaded!');
 };

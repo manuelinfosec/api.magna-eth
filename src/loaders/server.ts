@@ -1,15 +1,18 @@
 import bodyParser from 'body-parser';
-import { errors, celebrate, isCelebrateError } from 'celebrate';
+import { errors as celebrateErrors, isCelebrateError } from 'celebrate';
 import cors from 'cors';
 import * as express from 'express';
 import helmet from 'helmet';
+import { Server } from 'socket.io';
 import routes from '../api/routes';
+import middlewares from '../api/middlewares';
+import stream from '../api/routes/stream';
 
-export default (app: express.Application) => {
-  // Enable trust for proxy headers
+export default (app: express.Application, io: Server) => {
+  // Enable trust for proxy headers (e.g., if using a load balancer or reverse proxy)
   app.enable('trust proxy');
 
-  // Enable CORS
+  // Enable CORS for all routes
   app.use(cors());
 
   // Set security-related HTTP headers
@@ -19,15 +22,20 @@ export default (app: express.Application) => {
   app.use(bodyParser.json());
 
   // Middleware for handling validation errors from celebrate + Joi
-  app.use(errors());
+  app.use(celebrateErrors());
 
   // Mount API routes
   app.use('/api', routes);
 
+  io.use(middlewares.socketAuth);
+
+  // Mount Socket.io
+  stream(io);
+
   // Catch 404 errors and forward to error handler
   app.use((req, res, next) => {
-    const error: Error = new Error('Not Found');
-    error['status'] = 404;
+    const error: any = new Error('Not Found');
+    error.status = 404;
     next(error);
   });
 
@@ -39,14 +47,18 @@ export default (app: express.Application) => {
 
     // Error handler for validation errors (e.g., from Celebrate + Joi)
     if (isCelebrateError(err)) {
-      return res.status(422).send({ message: err.message, details: err.details }).end();
+      const details = {};
+      for (const [key, value] of err.details.entries()) {
+        details[key] = value.message;
+      }
+      return res.status(422).send({ message: err.message, details }).end();
     }
 
     // Pass the error to the next error handler if not handled here
     return next(err);
   });
 
-  // Other errors
+  // General error handler
   app.use((err, req, res, next) => {
     res.status(err.status || 500); // Set status code based on error or default to 500 (Internal Server Error)
     res.json({
