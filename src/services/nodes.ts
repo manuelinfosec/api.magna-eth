@@ -46,7 +46,7 @@ export default class NodeService {
       });
     } catch (error) {
       // Log any errors that occur during the scraping process
-      console.error('Error scraping Ethereum nodes', error);
+      throw new Error(`Could not scrape nodes: ${error.message}`);
     }
   }
 
