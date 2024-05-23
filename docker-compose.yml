@@ -22,7 +22,5 @@ services:
     environment:
       - POSTGRES_PASSWORD=password
       - POSTGRES_DB=magna_db
-    volumes:
-      - ./migrations:/docker-entrypoint-initdb.d/
     ports:
       - '5432:5432'
