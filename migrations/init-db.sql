@@ -21,9 +21,6 @@
  * - Ensure that the 'POSTGRES_PASSWORD' environment variable is set for the PostgreSQL container 
  *   to avoid authentication issues.
  * - Modify the database name 'magna_db' if a different default database name is required.
- * 
- * This file is essential for setting up the database environment correctly, ensuring that all necessary 
- * resources are available for the application upon container startup.
  * - No action is required of you. All has been handled in the docker-compose definition. 
  */
 
