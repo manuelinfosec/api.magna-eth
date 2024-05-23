@@ -43,7 +43,8 @@ We do not want just anyone to access our socket endpoints, so we will need an HT
 ## Methodologies & Assumptions
 
 - At startup, the public RPC website is scraped to create a pool of active nodes. (It's worth noting that I had connectivity problems accessing the Ethereum Nodes website over MTN network and might fail the startup process).
-- A round-robin scheduling algorithm is used to acquire a new node from the pool of nodes, in the case of inavailability.
+- A round-robin scheduling strategy is used to acquire a new node from the pool of nodes, in the case of inavailability.
+- JWT tokens are set to expire in 7 days.
 - There will always be active nodes available from the Ethereum Node List.
 
 ## Getting Started
@@ -78,7 +79,7 @@ To run the application in development mode, execute:
 yarn start
 ```
 
-The server will start and the address will be displayed as `http://0.0.0.0:3000`.
+The server will start and running on `http://0.0.0.0:3000`.
 
 ### Step 4: Building the Project
 
@@ -110,6 +111,118 @@ This command will start both the Node.js application and a PostgreSQL database. 
 
 ## API Documentation
 
+### User Authentication
+
+#### 1. Register User
+
+**URL:** `api/auth/register/`
+
+**Method:** `POST`
+
+Register a new user
+
+**Request Example:**
+
+```
+POST api/auth/register/
+```
+
+```json
+{
+  "first_name": "Chiemezie",
+  "last_name": "Njoku",
+  "username": "chiemezienjoku",
+  "email": "njokuchiemezie01@gmail.com",
+  "password": "securepassword123()"
+}
+```
+
+**Response Example:**
+
+```json
+{
+  "user": {
+    "id": "74a3fa76-9bea-4e9b-b03c-0845a4d57175",
+    "name": "Chiemezie Njoku",
+    "email": "testuser@example.com",
+    "createdAt": "2024-05-23T04:20:48.363Z",
+    "updatedAt": "2024-05-23T04:20:48.363Z"
+  },
+  "token": "<token>"
+}
+```
+
+#### 2. LoginAPI
+
+**URL:** `api/auth/login/`
+
+**Method:** `POST`
+
+Existing user login
+
+**Request Example:**
+
+```
+POST api/auth/login/
+```
+
+```json
+{
+  "email": "testuser@example.com",
+  "password": "securepassword123()"
+}
+```
+
+**Response Example:**
+
+```json
+{
+  "user": {
+    "id": "74a3fa76-9bea-4e9b-b03c-0845a4d57175",
+    "name": "Chiemezie Njoku",
+    "email": "testuser@example.com",
+    "createdAt": "2024-05-23T04:20:48.363Z",
+    "updatedAt": "2024-05-23T04:20:48.363Z"
+  },
+  "token": "<token>"
+}
+```
+
+#### 3. Logout (Not implemented)
+
+- Application relies on expiration of JWT tokens for logout.
+
+#### 4. ProfileAPI
+
+**URL:** `api/auth/profile/`
+
+**Method:** `GET`
+
+Accessing user profile
+
+**Request Example:**
+
+```
+GET api/auth/profile/
+
+Headers:
+Authorization: Bearer <token>
+```
+
+**Response Example:**
+
+```json
+{
+  "user": {
+    "id": "74a3fa76-9bea-4e9b-b03c-0845a4d57175",
+    "name": "Chiemezie Njoku",
+    "email": "testuser@example.com",
+    "createdAt": "2024-05-23T05:20:48.363Z",
+    "updatedAt": "2024-05-23T05:20:48.363Z"
+  }
+}
+```
+
 ### Socket Stream
 
 #### Client Example
@@ -138,7 +251,7 @@ socket.on('connect', () => {
   console.log('Connected to server');
 
   socket.emit('subscribe', {
-    block: null,
+    block: null, // can be ignored, integer or hex
     type: 'all',
     address: '0xf7858da8a6617f7c6d0ff2bcafdb6d2eedf64840',
   });
