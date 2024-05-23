@@ -31,33 +31,61 @@ class BlockService {
    * @throws Will throw an error if the JSON-RPC call returns an error.
    */
   private async fetchJSONRPC<T>(method: string, params: any[]): Promise<T> {
-    // Get an Ethereum node URL from the NodeService
-    const nodeUrl = await this.nodeService.getNode();
+    // Try all the nodes in the pool
+    const maxRetries = this.nodeService.nodes.length;
+    let retries = 0;
 
-    // Make a POST request to the Ethereum node with the JSON-RPC payload
-    const response = await fetch(nodeUrl, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        jsonrpc: '2.0',
-        method,
-        params,
-        id: 1,
-      }),
-    });
+    // Placeholder values
+    let response: Response;
+    let data: JSONRPCResponse<T>;
 
-    // Parse the response as JSON
-    const data: JSONRPCResponse<T> = await response.json();
+    // Retry loop for network and HTTP errors
+    while (retries < maxRetries) {
+      // Get a node from the pool
+      let nodeUrl = await this.nodeService.getNode();
+      try {
+        // Make a POST request to the Ethereum node with the JSON-RPC payload
+        response = await fetch(nodeUrl, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            jsonrpc: '2.0',
+            method,
+            params,
+            id: 1,
+          }),
+        });
 
-    // If there's an error in the response, throw an error
-    if (data.error) {
+        // Check for HTTP errors
+        if (!response.ok) {
+          throw new Error(`HTTP error! Status: ${response.status}`);
+        }
+
+        // Parse the response as JSON and cast to JSONRPCResponse<T>
+        data = (await response.json()) as JSONRPCResponse<T>;
+        break; // Exit the retry loop on successful response
+      } catch (error) {
+        console.log(`Error fetching from node ${nodeUrl}:`, error);
+        retries++;
+
+        if (retries < maxRetries) {
+          console.log(`Retrying... (${retries}/${maxRetries})`);
+        } else {
+          // Throw an error if max retries are reached
+          throw new Error('Max retries reached, unable to fetch JSON-RPC response.');
+        }
+      }
+    }
+
+    // Check for JSON-RPC errors outside of the retry loop
+    if (data && data.error) {
       throw new Error(`RPC error: ${data.error.message}`);
     }
 
     // Return the result from the response
-    return data.result;
+    return data.result!;
   }
 
   /**

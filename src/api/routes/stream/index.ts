@@ -36,43 +36,51 @@ export default (io: Server) => {
         // Apply the appropriate filter based on the filter criteria provided by the client.
         if (filter.type === 'all') {
           // No additional filtering needed, all transactions are included.
-          transactions = transactions;
+          for (const transaction of transactions) {
+            // Emit each filtered transaction to the client with a 1-second delay between emits.
+            socket.emit('transaction', transaction);
+            await new Promise((resolve) => setTimeout(resolve, 1000));
+          }
         } else if (filter.type === 'all' && filter.address) {
           // Filter transactions where the specified address is either the sender or receiver.
-          transactionFilterService
-            .filterTransactions(transactions, filter.address)
-            .forEach(async (transaction) => {
-              // Emit each filtered transaction to the client with a 1-second delay between emits.
-              socket.emit('transaction', transaction);
-              await new Promise((resolve) => setTimeout(resolve, 1000));
-            });
+          for (const transaction of transactionFilterService.filterTransactions(
+            transactions,
+            filter.address,
+          )) {
+            // Emit each filtered transaction to the client with a 1-second delay between emits.
+            socket.emit('transaction', transaction);
+            await new Promise((resolve) => setTimeout(resolve, 1000));
+          }
         } else if (filter.type === 'sender') {
           // Filter transactions where the specified address is the sender.
-          transactionFilterService
-            .filterBySender(transactions, filter.address)
-            .forEach(async (transaction) => {
-              // Emit each filtered transaction to the client with a 1-second delay between emits.
-              socket.emit('transaction', transaction);
-              await new Promise((resolve) => setTimeout(resolve, 1000));
-            });
+          for (const transaction of transactionFilterService.filterBySender(
+            transactions,
+            filter.address,
+          )) {
+            // Emit each filtered transaction to the client with a 1-second delay between emits.
+            socket.emit('transaction', transaction);
+            await new Promise((resolve) => setTimeout(resolve, 1000));
+          }
         } else if (filter.type === 'receiver') {
           // Filter transactions where the specified address is the receiver.
-          transactionFilterService
-            .filterByReceiver(transactions, filter.address)
-            .forEach(async (transaction) => {
-              // Emit each filtered transaction to the client with a 1-second delay between emits.
-              socket.emit('transaction', transaction);
-              await new Promise((resolve) => setTimeout(resolve, 1000));
-            });
+          for (const transaction of transactionFilterService.filterByReceiver(
+            transactions,
+            filter.address,
+          )) {
+            // Emit each filtered transaction to the client with a 1-second delay between emits.
+            socket.emit('transaction', transaction);
+            await new Promise((resolve) => setTimeout(resolve, 1000));
+          }
         } else if (filter.range) {
           // Filter transactions that fall within the specified value range.
-          transactionFilterService
-            .filterByValueRange(transactions, filter.range)
-            .forEach(async (transaction) => {
-              // Emit each filtered transaction to the client with a 1-second delay between emits.
-              socket.emit('transaction', transaction);
-              await new Promise((resolve) => setTimeout(resolve, 1000));
-            });
+          for (const transaction of transactionFilterService.filterByValueRange(
+            transactions,
+            filter.range,
+          )) {
+            // Emit each filtered transaction to the client with a 1-second delay between emits.
+            socket.emit('transaction', transaction);
+            await new Promise((resolve) => setTimeout(resolve, 1000));
+          }
         } else {
           // Emit an error message if the filter is invalid.
           socket.emit('error', { message: 'Invalid filter' });

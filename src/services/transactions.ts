@@ -73,7 +73,11 @@ export default class TransactionFilterService {
     };
 
     // Get the min and max values for the specified range
-    const [min, max] = ranges[range];
+    try {
+      var [min, max] = ranges[range];
+    } catch {
+      throw new Error('Invalid range filter');
+    }
 
     // Filter transactions based on their value in USD
     return transactions.filter((tx) => {

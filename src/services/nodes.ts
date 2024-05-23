@@ -10,7 +10,7 @@ import config from '../config';
 @Service()
 export default class NodeService {
   // Pool to store the scraped Ethereum node URLs
-  private nodes: string[] = [];
+  public nodes: string[] = [];
   // Index to keep track of the last returned node
   private currentNodeIndex: number = 0;
 

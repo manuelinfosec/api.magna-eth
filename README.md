@@ -1,18 +1,6 @@
 # api.magna-eth
 
-## Project Objective
-
-### Senior BE Take Home Coding Test
-
-#### Background
-
-As a senior engineer, your expertise in building functional and scalable backend applications is crucial. We are building new products and we need efficient and detailed delivery. For this coding assessment, the following resources have been provided for you:
-
-1. A list of public Ethereum RPC - [https://ethereumnodes.com/](https://ethereumnodes.com/).
-2. A Postman collection with the list of RPC calls you’d need to make to complete this task - [https://elements.getpostman.com/redirect?entityId=4993890-31387f80-7bcc-4c5b-8e4f-b6ca80bcf479&entityType=collection](https://elements.getpostman.com/redirect?entityId=4993890-31387f80-7bcc-4c5b-8e4f-b6ca80bcf479&entityType=collection).
-3. Read more about Ethereum JSON-RPC API spec to learn more - [https://ethereum.org/en/developers/docs/apis/json-rpc](https://ethereum.org/en/developers/docs/apis/json-rpc).
-
-#### Problem Statement
+## Problem Statement
 
 We want to track the activities on the block for our analysis application. For this application, we want to stream the transactions on the blockchain as they happen. We care about the following fields:
 
@@ -50,39 +38,12 @@ We do not want just anyone to access our socket endpoints, so we will need an HT
 7. An ETH block is confirmed in ~12 seconds. Blocks can have up to ~1,500 transactions in them (but are typically around 500 or less). You should do your best to make sure your API can handle sending this much data.
 8. Public Ethereum RPC endpoints may be down from time to time or you may run out of free API calls (~300 requests/min). You should pool the connections such that if an RPC is down, you can switch to the next one that is available.
 
-#### Deliverables
-
-Please provide us with the following deliverables:
-
-1. Source code of the final product via a public Github repository.
-2. Instructions on how to set up and run the code locally.
-3. Any relevant documentation explaining the design choices and assumptions made to enable the reviewers to understand your solution better.
-4. The project should be set up with Docker Compose to make running it locally possible with a single command.
-5. Optional: E2E tests or any other form of testing that you find appropriate.
-
-#### Evaluation Criteria
-
-1. **Correctness:** Does the final product meet the above-mentioned requirements and constraints?
-2. **Design and Architecture:** Is the overall design well-structured and modular? Does it follow best practices and industry standards?
-3. **Efficiency:** Does the product function smoothly without degrading over time? Is the product fast?
-4. **Error Handling:** How well does the product handle various error scenarios? Does it provide helpful error messages to prompt the user to take corrective action?
-5. **Code Quality:** Is the code clean, readable, and maintainable? Does it follow appropriate naming conventions and coding standards?
-
-#### Tips
-
-- The gas price and value in each transaction is hexadecimal. When you convert this to decimal (`parseInt("0x5c95dd96249b046", 16)`), you get the WEI value for the hexadecimal number you are looking at.
-
-- You can consider using the rooms functionality of `socket.io` to make things easier and cleaner. All the different events that you should ensure your API can provide all rely on the same data you already have. You only have to decide how to fan the data out. A lot of what you design will be reused code so what you really need to be concerned with is how you solve the problem.
-
-- You will only need the 2 API calls in the RPC collection provided. The first one to get the latest block number and the second to get the list of transactions on that block.
-
-If you cannot get everything working correctly, still submit your solution as we are evaluating more than the final output.
-
 > 💡 **Expo:** This test is about setting up `socket.io` and building a real-time endpoint with it. Ethereum is only a data source that can be swapped for anything in the future.
 
 ## Methodologies & Assumptions
 
 - At startup, the public RPC website is scraped to create a pool of active nodes. (It's worth noting that I had connectivity problems accessing the Ethereum Nodes website over MTN network and might fail the startup process).
+- A round-robin scheduling algorithm is used to acquire a new node from the pool of nodes, in the case of inavailability.
 - There will always be active nodes available from the Ethereum Node List.
 
 ## Getting Started
