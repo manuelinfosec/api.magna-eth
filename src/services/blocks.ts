@@ -94,7 +94,7 @@ class BlockService {
    * @param {any} input - The input to be checked and converted.
    * @returns {string | null} - The hexadecimal representation of the integer, or null if conversion is not possible.
    */
-  private async parseToHex(input: any): Promise<string | null> {
+  private parseToHex(input: any): string | null {
     // Try to parse the input as an integer
     const parsedInt = parseInt(input, 10);
 
