@@ -2367,7 +2367,7 @@ date.js@~0.3.3:
   dependencies:
     debug "~3.1.0"
 
-debug@2.6.9:
+debug@2.6.9, debug@^2, debug@^2.0.0:
   version "2.6.9"
   resolved "https://registry.npmjs.org/debug/-/debug-2.6.9.tgz"
   integrity sha512-bC7ElrdJaJnPbAP+1EotYvqZsb3ecl5wi6Bfi6BJTUcNowp6cvspg0jXznRTKDjm/E7AdgFBVeAPVMNcKGsHMA==
@@ -2724,6 +2724,13 @@ find-up@^4.0.0, find-up@^4.1.0:
     locate-path "^5.0.0"
     path-exists "^4.0.0"
 
+flat@^1.2.1:
+  version "1.6.2"
+  resolved "https://registry.yarnpkg.com/flat/-/flat-1.6.2.tgz#a107097d22d9733e25a402da28ddf3c1e9fc4afa"
+  integrity sha512-HdPlh/wtH+gVflFX49UV70kA2fF9oSgz3ICQE9OixGf3+llz+TZMuCpg53qg89lo6ZGiH4dbMtPElZeQ3ij3CA==
+  dependencies:
+    is-buffer "~1.1.2"
+
 forwarded@0.2.0:
   version "0.2.0"
   resolved "https://registry.npmjs.org/forwarded/-/forwarded-0.2.0.tgz"
@@ -3010,6 +3017,11 @@ is-binary-path@~2.1.0:
   integrity sha512-ZMERYes6pDydyuGidse7OsHxtbI7WVeUEozgR/g7rd0xUimYNlvZRE/K2MgZTjWy725IfelLeVcEM97mmtRGXw==
   dependencies:
     binary-extensions "^2.0.0"
+
+is-buffer@~1.1.2:
+  version "1.1.6"
+  resolved "https://registry.yarnpkg.com/is-buffer/-/is-buffer-1.1.6.tgz#efaa2ea9daa0d7ab2ea13a97b2b8ad51fefbe8be"
+  integrity sha512-NcdALwpXkTm5Zvvbk7owOUSvVvBKDgKP5/ewfXEznmQFfs4ZRmanOeKBTjRVjka3QFoN6XJ+9F3USqfHqTaU5w==
 
 is-core-module@^2.13.0:
   version "2.13.0"
@@ -4442,6 +4454,22 @@ socket.io-adapter@~2.5.2:
   dependencies:
     debug "~4.3.4"
     ws "~8.11.0"
+
+socket.io-events@^0.4:
+  version "0.4.6"
+  resolved "https://registry.yarnpkg.com/socket.io-events/-/socket.io-events-0.4.6.tgz#2e4235074d03c48d6a88959199c29be5dd718517"
+  integrity sha512-+mg60LePlO+FxkFr7ECIZnXz4JSGjVq9vBIPoaNr7cfjrw4v7t6AuxCNRL5Qf+BekMFdMTkGWJwgdYm26mYAuA==
+  dependencies:
+    debug "^2"
+
+socket.io-logger@^0.0.2:
+  version "0.0.2"
+  resolved "https://registry.yarnpkg.com/socket.io-logger/-/socket.io-logger-0.0.2.tgz#8bcbbb99cf5d9dedc4927aa1058d742cdfde920c"
+  integrity sha512-yarKT4RZOi3GXJw7RIgxgHv3U8ZVBD9oZJF+uNOigGzaUy9hPQeR54T+TfA7yrIDEN+RkNp0U2AwZGanENikaw==
+  dependencies:
+    debug "^2.0.0"
+    flat "^1.2.1"
+    socket.io-events "^0.4"
 
 socket.io-parser@~4.2.4:
   version "4.2.4"

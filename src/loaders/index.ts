@@ -7,11 +7,8 @@ import NodeService from '../services/nodes';
 
 export default async (app: express.Application, io) => {
   // Scrape and initialize Ethereum nodes
-  let nodeService = await Container.get(NodeService);
-  await nodeService.scrapeNodes();
-  let value = await nodeService.getNode();
-  console.log(value);
-  console.log('Created RPC Nodes pool');
+  await Container.get(NodeService).scrapeNodes();
+  console.log('RPC Nodes loaded');
 
   // Initialize and connect to the database
   await database();

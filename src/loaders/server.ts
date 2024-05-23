@@ -7,6 +7,7 @@ import { Server } from 'socket.io';
 import routes from '../api/routes';
 import middlewares from '../api/middlewares';
 import stream from '../api/routes/stream';
+import Logger from 'socket.io-logger';
 
 export default (app: express.Application, io: Server) => {
   // Enable trust for proxy headers (e.g., if using a load balancer or reverse proxy)
@@ -27,7 +28,17 @@ export default (app: express.Application, io: Server) => {
   // Mount API routes
   app.use('/api', routes);
 
+  // Register Socket.io middlewares
   io.use(middlewares.socketAuth);
+  // io.use(
+  //   Logger({
+  //     stream: {
+  //       write: function (data) {
+  //         console.log(data);
+  //       },
+  //     },
+  //   }),
+  // );
 
   // Mount Socket.io
   stream(io);
