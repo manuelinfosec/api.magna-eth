@@ -1,0 +1,1 @@
+CREATE DATABASE magna_db
