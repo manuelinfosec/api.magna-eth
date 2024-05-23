@@ -26,12 +26,27 @@ jobs:
       - name: Build and push Docker images
         run: docker-compose -f docker-compose.yml build
 
-      # Step 5: Start Docker Compose
+      # Step 5: Start Docker Compose in the background
       - name: Run Docker Compose
-        run: docker-compose -f docker-compose.yml up
+        run: |
+          docker-compose -f docker-compose.yml up &
+          COMPOSE_PID=$!
+          sleep 10  # Wait for a few seconds to let the services start
 
-      # Step 6: Tear down Docker Compose
+        # Step 6: Check if the service is running
+      - name: Check service status
+        run: |
+          if curl -s http://localhost:3000; then
+              echo "Service is running"
+          else
+              echo "Service is not running"
+              # Bring Docker Compose back to foreground
+              fg %1
+              exit 1
+              fi
+
+        # Step 7: Tear down Docker Compose
       - name: Tear down Docker Compose
-        if: always()
         run: docker-compose -f docker-compose.yml down
+        if: always()
         # The 'if: always()' condition ensures this step runs even if previous steps fail
