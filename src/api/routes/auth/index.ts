@@ -4,6 +4,7 @@ import { Container } from 'typedi';
 import { User } from '../../../models/User';
 import AuthService from '../../../services/auth';
 import middlewares from '../../middlewares';
+import { privateEncrypt } from 'crypto';
 
 const route = Router();
 
@@ -91,29 +92,29 @@ export default (app) => {
     },
   );
 
-  /**
-   * Route to log out the currently authenticated user.
-   *
-   * @route POST /auth/logout
-   * @group Auth - Authentication routes
-   * @security JWT
-   * @returns {void} 200 - Successful logout
-   * @returns {Error}  default - Unexpected error
-   */
-  route.post(
-    '/logout',
-    // Middleware to check if the user is authenticated
-    middlewares.isAuth,
-    async (req: Request, res: Response, next: NextFunction) => {
-      try {
-        // @TODO: Implement AuthService.Logout(req.user) to handle any necessary logout operations
-        return res.status(200).end();
-      } catch (e) {
-        // Log any errors that occur
-        console.log(' error ', e);
-        // Pass the error to the next middleware for handling
-        return next(e);
-      }
-    },
-  );
-};
+//   /**
+//    * Route to log out the currently authenticated user.
+//    *
+//    * @route POST /auth/logout
+//    * @group Auth - Authentication routes
+//    * @security JWT
+//    * @returns {void} 200 - Successful logout
+//    * @returns {Error}  default - Unexpected error
+//    */
+//   route.post(
+//     '/logout',
+//     // Middleware to check if the user is authenticated
+//     middlewares.isAuth,
+//     async (req: Request, res: Response, next: NextFunction) => {
+//       try {
+//         // @TODO: Implement AuthService.Logout(req.user) to handle any necessary logout operations
+//         return res.status(200).end();
+//       } catch (e) {
+//         // Log any errors that occur
+//         console.log(' error ', e);
+//         // Pass the error to the next middleware for handling
+//         return next(e);
+//       }
+//     },
+//   );
+// };

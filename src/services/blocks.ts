@@ -135,7 +135,7 @@ class BlockService {
 
     // Fetch the block data using JSON-RPC
     const blockData = await this.fetchJSONRPC<any>('eth_getBlockByNumber', [
-      latestBlockNumber,
+      latestBlockNumber ? latestBlockNumber : 'latest',
       true,
     ]);
 
