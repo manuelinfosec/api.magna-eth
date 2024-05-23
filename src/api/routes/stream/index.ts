@@ -51,7 +51,7 @@ export default (io: Server) => {
             socket.emit('transaction', transaction);
             await new Promise((resolve) => setTimeout(resolve, 1000));
           }
-        } else if (filter.type === 'sender') {
+        } else if (filter.type === 'sender' && filter.address) {
           // Filter transactions where the specified address is the sender.
           for (const transaction of transactionFilterService.filterBySender(
             transactions,
@@ -61,7 +61,7 @@ export default (io: Server) => {
             socket.emit('transaction', transaction);
             await new Promise((resolve) => setTimeout(resolve, 1000));
           }
-        } else if (filter.type === 'receiver') {
+        } else if (filter.type === 'receiver' && filter.address) {
           // Filter transactions where the specified address is the receiver.
           for (const transaction of transactionFilterService.filterByReceiver(
             transactions,
