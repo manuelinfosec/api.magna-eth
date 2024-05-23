@@ -25,6 +25,11 @@ export default {
   ethereumNodeWebsite: process.env.ETHEREUM_NODE_LIST || 'http://ethereumnodes.com',
 
   /**
+   * Ethereum to USD exchange rate
+   */
+  ethToUsd: 5000,
+
+  /**
    * Postgres connection options.
    */
   database: {

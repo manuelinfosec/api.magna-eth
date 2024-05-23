@@ -11,6 +11,8 @@ import config from '../config';
 export default class NodeService {
   // Pool to store the scraped Ethereum node URLs
   private nodes: string[] = [];
+  // Index to keep track of the last returned node
+  private currentNodeIndex: number = 0;
 
   /**
    * Scrape Ethereum nodes from the configured website.
@@ -49,12 +51,22 @@ export default class NodeService {
   }
 
   /**
-   * Get the list of scraped Ethereum nodes.
-   * This function returns the array of node URLs that were previously scraped.
+   * Get the next available Ethereum node URL in a round-robin manner.
+   * This function returns the next node URL from the pool of scraped nodes.
+   * If the end of the list is reached, it wraps around to the beginning.
    *
-   * @returns {string[]} An array of Ethereum node URLs.
+   * @returns {string} The next Ethereum node URL.
    */
-  public getNodes(): string[] {
-    return this.nodes;
+  public getNode(): string {
+    if (this.nodes.length === 0) {
+      throw new Error('No nodes available. Please scrape nodes first.');
+    }
+
+    // Get the current node URL
+    const node = this.nodes[this.currentNodeIndex];
+    // Increment the index to point to the next node
+    this.currentNodeIndex = (this.currentNodeIndex + 1) % this.nodes.length;
+
+    return node;
   }
 }

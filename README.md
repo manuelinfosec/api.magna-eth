@@ -37,3 +37,6 @@ Install [Node.js and NPM](https://nodejs.org/en/download/)
 
 - Run `yarn build` to generated all JavaScript files from the TypeScript sources.
 - the builded app located in `dist`.
+
+## Assumptions
+- There will always be active nodes from Ethereum Node List
