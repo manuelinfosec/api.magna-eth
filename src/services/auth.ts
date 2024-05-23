@@ -108,7 +108,7 @@ export default class AuthService {
   private generateToken(user: User): string {
     const today = new Date();
     const exp = new Date(today);
-    exp.setDate(today.getDate() + 60); // Set the token to expire in 60 days
+    exp.setDate(today.getDate() + 7); // Set the token to expire in 7 days
 
     return jwt.sign(
       {
