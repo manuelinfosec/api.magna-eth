@@ -34,19 +34,19 @@ export default (io: Server) => {
         let transactions = block.transactions; // Extract transactions from the block.
 
         // Apply the appropriate filter based on the filter criteria provided by the client.
-        if (filter.type === 'all') {
-          // No additional filtering needed, all transactions are included.
-          for (const transaction of transactions) {
-            // Emit each filtered transaction to the client with a 1-second delay between emits.
-            socket.emit('transaction', transaction);
-            await new Promise((resolve) => setTimeout(resolve, 1000));
-          }
-        } else if (filter.type === 'all' && filter.address) {
+        if (filter.type === 'all' && filter.address) {
           // Filter transactions where the specified address is either the sender or receiver.
           for (const transaction of transactionFilterService.filterTransactions(
             transactions,
             filter.address,
           )) {
+            // Emit each filtered transaction to the client with a 1-second delay between emits.
+            socket.emit('transaction', transaction);
+            await new Promise((resolve) => setTimeout(resolve, 1000));
+          }
+        } else if (filter.type === 'all') {
+          // No additional filtering needed, all transactions are included.
+          for (const transaction of transactions) {
             // Emit each filtered transaction to the client with a 1-second delay between emits.
             socket.emit('transaction', transaction);
             await new Promise((resolve) => setTimeout(resolve, 1000));
