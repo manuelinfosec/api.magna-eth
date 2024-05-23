@@ -3,26 +3,26 @@ services:
   app:
     build: .
     environment:
-      - PORT=8080
+      - PORT=3000
       - JWT_SECRET=secret
       - TYPEORM_CONNECTION=postgres
       - TYPEORM_HOST=postgres
-      - TYPEORM_PORT=27017
-      - TYPEORM_DATABASE=test
+      - TYPEORM_PORT=5432
+      - TYPEORM_DATABASE=magna_db
+      - TYPEORM_USERNAME=postgres
+      - TYPEORM_PASSWORD=password
+      - ETHEREUM_NODE_LIST=https://ethereumnodes.com
     ports:
-      - "8080:8080"
-    links:
+      - '3000:3000'
+    depends_on:
       - postgres
-    networks:
-      - internal
-      
-  postgres:
-    image: mongo:latest
-    ports:
-      - "27017:27017"
-    networks:
-      - internal
 
-networks:
-  internal:
-    driver: bridge
+  postgres:
+    image: postgres:latest
+    environment:
+      - POSTGRES_PASSWORD=password
+      - POSTGRES_DB=magna_db
+    volumes:
+      - ./migrations:/docker-entrypoint-initdb.d/
+    ports:
+      - '5432:5432'
