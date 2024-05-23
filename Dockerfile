@@ -33,7 +33,9 @@ RUN yarn build
 # Final stage for the production image
 FROM base
 
-# Copy built application from the build stage
+# Copy built application from the build stage (to reduce image size)
+COPY --from=build /app/package.json /app/package.json
+COPY --from=build /app/node_modules/ /app/node_modules/
 COPY --from=build /app/dist/ /app/dist/
 
 # Expose the port the app runs on

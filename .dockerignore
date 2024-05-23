@@ -11,3 +11,5 @@ LICENSE
 README.md
 build
 dist
+examples
+client.ts
