@@ -28,7 +28,7 @@ jobs:
 
       # Step 5: Start Docker Compose
       - name: Run Docker Compose
-        run: docker-compose -f docker-compose.yml up -d
+        run: docker-compose -f docker-compose.yml up
 
       # Step 6: Tear down Docker Compose
       - name: Tear down Docker Compose
