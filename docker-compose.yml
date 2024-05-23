@@ -6,7 +6,7 @@ services:
       - PORT=3000
       - JWT_SECRET=secret
       - TYPEORM_CONNECTION=postgres
-      - TYPEORM_HOST=127.0.0.1
+      - TYPEORM_HOST=postgres
       - TYPEORM_PORT=5432
       - TYPEORM_DATABASE=magna_db
       - TYPEORM_USERNAME=postgres
