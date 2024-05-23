@@ -31,9 +31,9 @@ Install [Node.js and NPM](https://nodejs.org/en/download/)
 
 ## API Documentation
 
-### Stream
+### Socket Stream
 
-Request Example:
+**Request Example:**
 
 ```javascript
 const io = require('socket.io-client');
@@ -57,7 +57,7 @@ socket.on('connect', () => {
   console.log('Connected to server');
 
   socket.emit('subscribe', {
-    block: '19928855',
+    block: null,
     type: 'all',
     address: '0xf7858da8a6617f7c6d0ff2bcafdb6d2eedf64840',
   });
@@ -76,7 +76,7 @@ socket.on('error', (error) => {
 });
 ```
 
-### Stream Filters
+#### Stream Filters
 
 1. All Events
 
