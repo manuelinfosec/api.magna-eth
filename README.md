@@ -104,12 +104,15 @@ For seamless execution, you can run the entire project using Docker Compose. Thi
 ```bash
 docker-compose up
 ```
+A GitHub Action workflow was created to demonstrate the one-click setup, find it in the [Actions](https://github.com/manuelinfosec/api.magna-eth/actions) tab.
 
 This command will start both the Node.js application and a PostgreSQL database. The server will be available at `http://localhost:3000`.
 
 > **Note:** Environment variables are provided in plaintext for ease of execution in a development or test environment. This approach is not recommended for production environments. In production, copy the `env.example` template to `.env` and update its variables.
 
 ## API Documentation
+
+For the API endpoints, a Postman collection is available in the [`postman`](/postman/) directory of this project. This collection includes all the necessary endpoints for testing user registration and authentication.
 
 ### User Authentication
 
