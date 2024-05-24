@@ -23,7 +23,7 @@ jobs:
         uses: docker/setup-qemu-action@v2
 
       # Step 4: Build Docker images defined in the docker-compose.yml file
-      - name: Build and push Docker images
+      - name: Build Docker image
         run: docker-compose -f docker-compose.yml build
 
       # Step 5: Start Docker Compose in the background
