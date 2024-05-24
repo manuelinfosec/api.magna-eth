@@ -17,6 +17,10 @@ declare global {
       currentUser: User;
     }
   }
+
+  export interface Error {
+    data: Object;
+  }
 }
 
 declare module 'socket.io' {

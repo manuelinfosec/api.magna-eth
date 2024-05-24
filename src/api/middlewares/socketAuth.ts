@@ -20,7 +20,7 @@ const socketAuth = async (socket, next) => {
 
     if (!token) {
       // If no token is provided, return an authentication error
-      return next(new Error('Authentication error'));
+      throw new Error('Authentication error');
     }
 
     // Verify the JWT token using the secret key from the config
@@ -36,7 +36,7 @@ const socketAuth = async (socket, next) => {
 
     if (!user) {
       // If no user is found, return an authentication error
-      return next(new Error('User not found'));
+      throw new Error('Authentication error');
     }
 
     // Attach the user to the socket object for further use in the application
@@ -46,9 +46,8 @@ const socketAuth = async (socket, next) => {
     next();
   } catch (err) {
     // In case of any errors during the process, pass the error to the next middleware
-    next('Authentication Error');
+    next(err);
   }
 };
-
 
 export default socketAuth;

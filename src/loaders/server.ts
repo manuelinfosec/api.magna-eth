@@ -7,11 +7,35 @@ import { Server } from 'socket.io';
 import routes from '../api/routes';
 import middlewares from '../api/middlewares';
 import stream from '../api/routes/stream';
-import Logger from 'socket.io-logger';
+import * as winston from 'winston';
+
+const morgan = require('morgan');
+
+const { printf, combine, timestamp, colorize, json } = winston.format;
+
+const printFormat = winston.createLogger({
+  level: 'silly',
+  format: combine(
+    timestamp(),
+    colorize(),
+    printf(({ level, message, timestamp }) => `[${timestamp} ${level}: ${message}]`),
+  ),
+  transports: [new winston.transports.Console()],
+});
 
 export default (app: express.Application, io: Server) => {
   // Enable trust for proxy headers (e.g., if using a load balancer or reverse proxy)
   app.enable('trust proxy');
+
+  // Middleware for pretty print logging to console
+  app.use(
+    morgan(':method :url :status :res[content-length] - :response-time ms', {
+      stream: {
+        // Configure Morgan to use our custom logger with the http severity
+        write: (message) => printFormat.http(message.trim()),
+      },
+    }),
+  );
 
   // Enable CORS for all routes
   app.use(cors());
@@ -30,15 +54,6 @@ export default (app: express.Application, io: Server) => {
 
   // Register Socket.io middlewares
   io.use(middlewares.socketAuth);
-  // io.use(
-  //   Logger({
-  //     stream: {
-  //       write: function (data) {
-  //         console.log(data);
-  //       },
-  //     },
-  //   }),
-  // );
 
   // Mount Socket.io
   stream(io);
