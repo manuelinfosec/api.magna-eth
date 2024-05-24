@@ -18,7 +18,18 @@ declare global {
     }
   }
 
+  /**
+   * Extends the global Error interface to include a custom data property.
+   */
   export interface Error {
+    /**
+     * Property to store additional data related to the error.
+     *
+     * This can be any object containing extra information about the error
+     * that might be useful for debugging or handling the error.
+     *
+     * @type {Object} - The type of the data property is a generic object.
+     */
     data: Object;
   }
 }
