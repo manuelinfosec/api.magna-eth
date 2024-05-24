@@ -30,7 +30,7 @@ declare global {
      *
      * @type {Object} - The type of the data property is a generic object.
      */
-    data: Object;
+    data?: Object;
   }
 }
 
