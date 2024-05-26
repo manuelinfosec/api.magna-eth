@@ -2,6 +2,8 @@ import { Server, Socket } from 'socket.io';
 import { Container } from 'typedi';
 import BlockService from '../../../services/blocks';
 import TransactionFilterService from '../../../services/transactions';
+import extractTransactionDetails from './utils';
+
 
 // Get service instances from Typedi container
 // These services handle block retrieval and transaction filtering.
@@ -41,14 +43,14 @@ export default (io: Server) => {
             filter.address,
           )) {
             // Emit each filtered transaction to the client with a 1-second delay between emits.
-            socket.emit('transaction', transaction);
+            socket.emit('transaction', extractTransactionDetails(transaction));
             await new Promise((resolve) => setTimeout(resolve, 1000));
           }
         } else if (filter.type === 'all') {
           // No additional filtering needed, all transactions are included.
           for (const transaction of transactions) {
             // Emit each filtered transaction to the client with a 1-second delay between emits.
-            socket.emit('transaction', transaction);
+            socket.emit('transaction', extractTransactionDetails(transaction));
             await new Promise((resolve) => setTimeout(resolve, 1000));
           }
         } else if (filter.type === 'sender' && filter.address) {
@@ -58,7 +60,7 @@ export default (io: Server) => {
             filter.address,
           )) {
             // Emit each filtered transaction to the client with a 1-second delay between emits.
-            socket.emit('transaction', transaction);
+            socket.emit('transaction', extractTransactionDetails(transaction));
             await new Promise((resolve) => setTimeout(resolve, 1000));
           }
         } else if (filter.type === 'receiver' && filter.address) {
@@ -68,7 +70,7 @@ export default (io: Server) => {
             filter.address,
           )) {
             // Emit each filtered transaction to the client with a 1-second delay between emits.
-            socket.emit('transaction', transaction);
+            socket.emit('transaction', extractTransactionDetails(transaction));
             await new Promise((resolve) => setTimeout(resolve, 1000));
           }
         } else if (filter.range) {
@@ -78,7 +80,7 @@ export default (io: Server) => {
             filter.range,
           )) {
             // Emit each filtered transaction to the client with a 1-second delay between emits.
-            socket.emit('transaction', transaction);
+            socket.emit('transaction', extractTransactionDetails(transaction));
             await new Promise((resolve) => setTimeout(resolve, 1000));
           }
         } else {
