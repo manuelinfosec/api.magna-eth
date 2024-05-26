@@ -385,6 +385,6 @@ In the case of an invalid filter, the stream will be in the following format:
 
 ```javascript
 {
-  message: 'RPC error: invalid argument 0: hex string without 0x prefix';
+  message: 'Invalid filter';
 }
 ```
