@@ -4319,10 +4319,10 @@ postgres-interval@^1.1.0:
   dependencies:
     xtend "^4.0.0"
 
-prettier@^3.0.3:
-  version "3.0.3"
-  resolved "https://registry.npmjs.org/prettier/-/prettier-3.0.3.tgz"
-  integrity sha512-L/4pUDMxcNa8R/EthV08Zt42WBO4h1rarVtK0K+QJG0X187OLo7l699jWw0GKuwzkPQ//jMFA/8Xm6Fh3J/DAg==
+prettier@^3.3.1:
+  version "3.3.1"
+  resolved "https://registry.yarnpkg.com/prettier/-/prettier-3.3.1.tgz#e68935518dd90bb7ec4821ba970e68f8de16e1ac"
+  integrity sha512-7CAwy5dRsxs8PHXT3twixW9/OEll8MLE0VRPCJyl7CkS6VHGPSlsVaWTiASPTyGyYRyApxlaWTzwUxVNrhcwDg==
 
 pretty-format@^29.0.0, pretty-format@^29.7.0:
   version "29.7.0"
